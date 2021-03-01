@@ -1,0 +1,5 @@
+*.o
+*.pyc
+*.log
+*.bak
+comitar.sh
