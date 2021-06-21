@@ -22,15 +22,22 @@ def tarefa2(n):
 
 def main():
 
-    thread1 = threading.Thread(target=tarefa2, args=(15007003,),name='Tarefa 01')
-    thread2 = threading.Thread(target=tarefa1, args=(10,100,),name='Tarefa 02')
-    thread3 = threading.Thread(target=tarefa2, args=(5781921,),name='Tarefa 03')
-    thread4 = threading.Thread(target=tarefa1, args=(1000,10000,), name='Tarefa 04')
+    thread1 = threading.Thread(target=tarefa1, args=(10,100,),name='Tarefa 01')
+    thread2 = threading.Thread(target=tarefa1, args=(100,1000,),name='Tarefa 02')
+    thread3 = threading.Thread(target=tarefa1, args=(1000,10000,),name='Tarefa 03')
+    thread4 = threading.Thread(target=tarefa1, args=(10000,20000,), name='Tarefa 04')
 
     thread1.start()
     thread2.start()
     thread3.start()
     thread4.start()
+
+    thread1.join()
+    thread2.join()
+    thread3.join()
+    thread4.join()
+
+    print("TERMINOU O PROGRAMA PRINCIPAL")
 
 if __name__ == "__main__":
     main()
