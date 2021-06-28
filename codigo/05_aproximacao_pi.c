@@ -33,7 +33,7 @@ int main() {
     sum = 0;
     inicio = omp_get_wtime();
     step = 1.0/(double) num_steps;
-    #pragma omp parallel num_threads(4)
+    #pragma omp parallel private(x) num_threads(4)
     {
         #pragma omp for reduction (+:sum)
         for (i=0;i< num_steps; i++){
