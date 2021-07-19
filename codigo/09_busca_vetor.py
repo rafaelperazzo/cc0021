@@ -11,7 +11,7 @@ def busca(inicio,fim,n):
             total = total + 1
 
 if __name__ == '__main__':
-    tamanho = 50000000
+    tamanho = 500000
     n = 20
     p = 2
     vetor = random.sample(range(0,tamanho),tamanho)
