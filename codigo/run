@@ -1,0 +1,1 @@
+mpirun -host IP -n 1 -d --mca plm_rsh_no_tree_spawn 1 /home/perazzo/./programa
