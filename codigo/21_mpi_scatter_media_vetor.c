@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
     MPI_Scatter(vetor, quantidades, MPI_LONG, subvetor,quantidades, MPI_LONG, 0, MPI_COMM_WORLD);
     
     //Calculando a soma do subvetor
-    long int soma;
+    long int soma=0;
     
     for (i=0;i<quantidades;i++) {
         soma = soma + subvetor[i];
@@ -53,7 +53,7 @@ int main(int argc, char** argv) {
     
     if (rank==0) {
         long int total=0;
-        for (i=1;i<nprocs;i++) {
+        for (i=0;i<nprocs;i++) {
             total = total + somas[i];
             printf("TOtal parcial[%ld]:%ld\n",i,somas[i]);
         }
