@@ -1,3 +1,4 @@
+//Fonte: https://www.geeksforgeeks.org/combinations-with-repetitions/
 // C program to print all combination of size r in an array
 // of size n with repetitions allowed
 #include <stdio.h>
