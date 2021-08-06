@@ -13,7 +13,6 @@
 
 using namespace std;
 
-
 // Recursive helper function, adds/removes characters
 // until len is reached
 void generate(char* arr, int i, string s, int len, string senha,int rank, double t_inicio)
