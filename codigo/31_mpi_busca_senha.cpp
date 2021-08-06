@@ -23,6 +23,9 @@ void generate(char* arr, int i, string s, int len, string senha,int rank, double
 	{
 		if (senha.compare(s)==0) {
             cout << "Processo [" <<rank << "] encontrou a senha " << senha << endl;
+            double t_fim = MPI_Wtime();
+            cout << "Tempo de execução: " << t_fim - t_inicio << endl;
+            MPI_Abort(MPI_COMM_WORLD,MPI_SUCCESS);
         }
 		return;
 	}
@@ -93,6 +96,7 @@ int main()
     MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+
     /*
     Iniciando o tempo de execução, e envio da senha a ser procurada
     */
