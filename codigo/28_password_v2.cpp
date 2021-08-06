@@ -94,8 +94,6 @@ int main()
     MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    MPI_Status status;
-    MPI_Request request = MPI_REQUEST_NULL;
 
     /*
     Iniciando o tempo de execução, e envio da senha a ser procurada
