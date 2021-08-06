@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 #include "mpi.h"
+#include <unistd.h>
+
 int main(int argc, char **argv)
 {
-  char message[20];
+  int message = 1;
   int  i, rank, size;
   MPI_Status status;
-  MPI_Request request = MPI_REQUEST_NULL;
+  MPI_Request request; 
   int root = 0;
 
   MPI_Init(&argc, &argv);
@@ -15,15 +17,18 @@ int main(int argc, char **argv)
 
   if (rank == root)
   {
-    strcpy(message, "Hello, world");
+    message = 555;
+    MPI_Ibcast(&message, 1, MPI_INT, root, MPI_COMM_WORLD,&request);
+    MPI_Wait (&request, &status);
   }
-  MPI_Ibcast(message, 13, MPI_CHAR, root, MPI_COMM_WORLD,&request);
-  MPI_Wait (&request, &status);
-  if (rank == root)
-  {
-    strcpy(message, "What will happen?");
+  else {
+    usleep(5000000);
+    MPI_Ibcast(&message, 1, MPI_INT, root, MPI_COMM_WORLD,&request);
+    //MPI_Wait (&request, &status);
+    printf( "Message: %d\n", message);
   }
-  printf( "Message from process %d : %s\n", rank, message);
+  
+  MPI_Barrier(MPI_COMM_WORLD);
 
   MPI_Finalize();
 }

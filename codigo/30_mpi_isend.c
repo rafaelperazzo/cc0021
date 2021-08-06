@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
     if(my_rank == 0)
     {
         // The "master" MPI process sends the messages.
-        int buffer[2] = {12345, 67890};
+        int buffer = {12345, 67890};
         MPI_Request requests[2];
         int recipient_rank_of_request[2];
  

@@ -19,12 +19,12 @@ void generate(char* arr, int i, string s, int len, string senha,int rank)
 	// base case
 	if (i == 0) // when len has been reached
 	{
+        MPI_Request request;
+        int message = 0;
 		if (senha.compare(s)==0) {
             cout << rank << " encontrou!" << endl;
-            int message = 1;
-            MPI_Bcast(&message, 1, MPI_INT, rank, MPI_COMM_WORLD);
+            message = 1;
         }
-
 		return;
 	}
 
