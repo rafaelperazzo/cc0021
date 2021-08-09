@@ -48,8 +48,9 @@ int main(int argc, char** argv) {
     long int total=0;
     for (i=0;i<nprocs;i++) {
         total = total + somas[i];
-        printf("Total parcial[%ld]:%ld\n",i,somas[i]);
+        
     }
+    printf("Total parcial[%d]:%ld\n",rank,somas[rank]);
     printf("Total: %ld\n",total);
     
     /*
