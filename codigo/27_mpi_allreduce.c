@@ -14,7 +14,10 @@ int main(int argc, char** argv) {
     MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    
+    char processor_name[MPI_MAX_PROCESSOR_NAME];
+    int name_len;
+    MPI_Get_processor_name(processor_name, &name_len);
+
     /*
     Cada processo gera seu subvetor
     */
@@ -23,7 +26,7 @@ int main(int argc, char** argv) {
     vetor = malloc(ELEMENTOS_POR_PROCESSO*sizeof(long int));
     time_t t;
     srand((unsigned) time(&t));
-    for (i=0;i<TAMANHO;i++) {
+    for (i=0;i<ELEMENTOS_POR_PROCESSO;i++) {
         long int num = (rand() % (max+1));
         vetor[i] = num;
     }
@@ -42,7 +45,7 @@ int main(int argc, char** argv) {
     /*
     Todos os processos recebem a soma global
     */
-    printf("[PROCESSO %d] recebeu a soma total %ld\n",rank,soma_total);
+    printf("[PROCESSO %d - %s] recebeu a soma total %ld\n",rank,processor_name,soma_total);
     
     /*
     FIM DO CÓDIGO MPI
