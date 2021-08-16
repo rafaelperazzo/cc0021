@@ -6,7 +6,7 @@ df = pd.read_csv('resultados.csv',sep=';')
 
 labels = list(df['N'].unique())
 threads = list(df['threads'])
-tempos = list(df['Tempo'])
+tempos = list(df['speedup'])
 
 NUM_THREADS = 2
 
@@ -40,5 +40,8 @@ ax.set_xticks(x)
 ax.set_xticklabels(labels)
 ax.legend()
 
+ax.bar_label(rects1, padding=3)
+ax.bar_label(rects2, padding=3)
+
 fig.tight_layout()
-plt.savefig('resultados_tempo.png')
+plt.savefig('resultados_speedup.png')

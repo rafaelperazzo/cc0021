@@ -35,22 +35,38 @@ int eratosthenes(int lastNumber, int threads)
 }
 
 int main() {
-    char *filename = "resultados.dat";
+    char *filename = "resultados.csv";
     FILE *fp = fopen(filename, "w");
     fprintf(fp,"%s;%s;%s;%s\n","N","threads","Tempo","Total");
     int threads = 2;
-    int maximo = 1000000000;
-    int inicio = 100000000;
-    int step = 200000000;
-    
+    int maximo = 100000000;
+    int inicio = 10000000;
+    int step = 10000000;
+    int repeticoes = 10;
+    double tempo_inicio,tempo_fim,tempo_sequencial=0,speedup=0,media_tempo = 0;
+    /*
+    ANÁLISE DE DESEMPENHO
+    */
     for (int i=inicio;i<=maximo;i+=step) { //i -> limites
         for (int j=1;j<=threads;j++) { //j-> threads
-            double inicio = omp_get_wtime();
             int total = 0;
-            total = eratosthenes(i,j);
-            double fim = omp_get_wtime();
-            printf("%d %d %f %d\n",i,j,fim-inicio,total);
-            fprintf(fp,"%d;%d;%f;%d\n",i,j,fim-inicio,total);
+            for (int k=1;k<=repeticoes;k++) {
+                tempo_inicio = omp_get_wtime();
+                total = eratosthenes(i,j);
+                tempo_fim = omp_get_wtime();
+                media_tempo = media_tempo + (tempo_fim-tempo_inicio);
+            }
+            media_tempo = media_tempo/(double)repeticoes;
+            if (j==1) { //sequencial
+                tempo_sequencial = media_tempo;
+                speedup = 1;
+            }
+            else {
+                speedup = tempo_sequencial/(media_tempo);
+            }
+            printf("%d %d %f %d %.2f\n",i,j,media_tempo,total,speedup);
+            fprintf(fp,"%d;%d;%f;%d;%.2f\n",i,j,media_tempo,total,speedup);
+
         }
     }
     fclose(fp);
