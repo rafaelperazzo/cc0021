@@ -1,3 +1,21 @@
+/*
+ * =====================================================================================
+ *
+ *       Filename:  30_crivo_base.c
+ *
+ *    Description:  Crivo de Eratostenes, considerando pares e ímpares, com OPENMP
+ *
+ *        Version:  1.0
+ *        Created:  17/08/2021 10:19
+ *       Revision:  none
+ *       Compiler:  gcc/g++
+ *
+ *         Author:  Rafael Perazzo B Mota
+ *          email:  rafael.mota@ufca.edu.br
+ *   Organization:  UNIVERSIDADE FEDERAL DO CARIRI
+ *
+ * =====================================================================================
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,20 +32,26 @@ int eratosthenes(int lastNumber, int threads)
   char *isPrime = (char*)malloc((lastNumber+1)*sizeof(char));
   const int lastNumberSqrt = (int)sqrt((double)lastNumber);
   #pragma omp parallel for
-    for (int i = 0; i <= lastNumber; i++)
+    for (int i = 0; i <= lastNumber; i++) {
         isPrime[i] = 1;
+    }
   
   //PASSO 2
   #pragma omp parallel for schedule(dynamic)
-    for (int i = 2; i<= lastNumberSqrt; i++)
-        if (isPrime[i])
-        for (int j = i*i; j <= lastNumber; j += i)
-            isPrime[j] = 0;
+    for (int i = 2; i<= lastNumberSqrt; i++) {
+        if (isPrime[i]) {
+            for (int j = i*i; j <= lastNumber; j += i) {
+                isPrime[j] = 0;
+            }
+        }
+    }
+  
   //PASSO 3
   int found = 0;
   #pragma omp parallel for reduction(+:found)
-    for (int i = 2; i <= lastNumber; i++)
+    for (int i = 2; i <=lastNumber; i++) {
         found += isPrime[i];
+    }
   
   //FINALIZANDO
   free(isPrime);
@@ -37,7 +61,7 @@ int eratosthenes(int lastNumber, int threads)
 int main() {
     char *filename = "resultados.csv";
     FILE *fp = fopen(filename, "w");
-    fprintf(fp,"%s;%s;%s;%s\n","N","threads","Tempo","Total");
+    fprintf(fp,"%s;%s;%s;%s %s\n","N","threads","Tempo","Total","speedup");
     int threads = 2;
     int maximo = 100000000;
     int inicio = 10000000;
