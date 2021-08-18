@@ -22,7 +22,6 @@
 #include <omp.h>
 #include <math.h>
 
-//FALTA COLOCAR AS DIRETIVAS DO OPENMP
 int eratosthenes(int lastNumber, int threads)
 {
   
@@ -61,12 +60,12 @@ int eratosthenes(int lastNumber, int threads)
 int main() {
     char *filename = "resultados.csv";
     FILE *fp = fopen(filename, "w");
-    fprintf(fp,"%s;%s;%s;%s %s\n","N","threads","Tempo","Total","speedup");
+    fprintf(fp,"%s;%s;%s;%s;%s\n","N","threads","Tempo","Total","speedup");
     int threads = 2;
-    int maximo = 100000000;
-    int inicio = 10000000;
-    int step = 10000000;
-    int repeticoes = 10;
+    int maximo = 1000000000;
+    int inicio = 1000000000;
+    int step = 100000000;
+    int repeticoes = 3;
     double tempo_inicio,tempo_fim,tempo_sequencial=0,speedup=0,media_tempo = 0;
     /*
     ANÁLISE DE DESEMPENHO

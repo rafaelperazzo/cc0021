@@ -1,1 +1,3 @@
-N;threads;Tempo;Total speedup
+N;threads;Tempo;Total
+1000000000;1;21.9195;50847534
+1000000000;2;13.5348;50847534
