@@ -5,7 +5,6 @@
 #include <math.h>
 
 #define TAMANHO 10000
-#define ELEMENTOS_POR_PROCESSO 500
 #define MAX  100
 
 int gerar_numero_aleatorio(int max) {
