@@ -3,19 +3,25 @@
 #include <time.h>
 #include <omp.h>
 
-#define LINHAS 5
-#define COLUNAS 5
+#define LINHAS 2000
+#define COLUNAS 2000
 #define MAX 100
 
 int **gerar_matriz(int linhas, int colunas, int threads);
 int *gerar_vetor(int n, int threads);
 int **gerar_matriz_vazia(int linhas, int colunas, int threads);
-void mostrar(int linhas, int colunas, int **m);
+int **mostrar(int linhas, int colunas, int **m);
+int **multiplicar(int linhas, int colunas, int **a, int **b);
 
 int main() {
    int n_procs = omp_get_num_procs();
    int n_threads = (int)(n_procs/2.0);
    int **a = gerar_matriz(LINHAS,COLUNAS,n_threads);
+   int **b = gerar_matriz(LINHAS,COLUNAS,n_threads);
+   double inicio = omp_get_wtime();
+   int **c = multiplicar(LINHAS,COLUNAS,a,b);
+   double fim = omp_get_wtime();
+   printf("Tempo: %.4f\n",fim-inicio);
 }
     
 int **gerar_matriz(int linhas, int colunas, int threads){
@@ -71,12 +77,21 @@ int *gerar_vetor(int n, int threads) {
     return vetor;
 }
 
-void mostrar(int linhas, int colunas, int **m){
-    int i,j;
+int **multiplicar(int linhas, int colunas, int **a, int **b){
+    int i,j,k;
     //ALOCANDO A MATRIZ
+    int **c = (int **)malloc(linhas * sizeof(int*));
+    for(int i = 0; i < linhas; i++) c[i] = (int *)malloc(colunas * sizeof(int));
+    int soma;
     for (i=0;i<linhas;i++) {
         for (j=0;j<colunas;j++) {
-            printf("%d\n",m[i][j]);
+            soma = 0;
+            for (k=0;k<linhas;k++) {
+                soma = soma + a[i][k] + b[k][j];    
+            }
+            c[i][j] = soma;
         }
     }
+
+    return (c);
 }
