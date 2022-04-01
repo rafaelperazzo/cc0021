@@ -6,16 +6,6 @@
 #define TAMANHO 1000000000
 #define max  90000000
 
-int achou_p(int n, int *vetor, int inicio, int fim) {
-    int i;
-    for (i=inicio;i<fim;i++) {
-        if (n==vetor[i]) {
-            return (1);
-        }
-    }
-    return 0;
-}
-
 int achou_s(int n, int *vetor, int inicio, int fim) {
     int i;
     for (i=inicio;i<fim;i++) {
@@ -55,9 +45,9 @@ int main () {
         #pragma omp single 
         {
             #pragma omp task
-                achou = achou_p(n,vetor,0,(int)(TAMANHO/2));
+                achou = achou_s(n,vetor,0,(int)(TAMANHO/2));
             #pragma omp task
-                achou = achou_p(n,vetor,(int)(TAMANHO/2),TAMANHO);
+                achou = achou_s(n,vetor,(int)(TAMANHO/2),TAMANHO);
             #pragma omp taskwait
         }
 
