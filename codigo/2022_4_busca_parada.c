@@ -16,6 +16,33 @@ int achou_s(int n, int *vetor, int inicio, int fim) {
     return 0;
 }
 
+int achou_p(int n, int *vetor) {
+    int i;
+    int metade = (int)(TAMANHO/2);
+    int achou = 0;
+    #pragma omp task
+    for (i=0;i<metade;i++) {
+        if (!achou) {
+            if (n==vetor[i]) {
+                achou = 1;
+                break;            
+            }
+        }
+    }
+    #pragma omp task
+    for (i=metade;i<TAMANHO;i++) {
+        if (!achou) {
+            if (n==vetor[i]) {
+                achou = 1;
+                break;          
+            }
+        }
+    }
+    #pragma omp taskwait
+    return (achou);
+}
+
+
 int main () {
     //INICIANDO GERADOR DE NÚMERO ALEATÓRIO
     time_t t;
@@ -44,15 +71,10 @@ int main () {
     {
         #pragma omp single 
         {
-            #pragma omp task
-                achou = achou_s(n,vetor,0,(int)(TAMANHO/2));
-            #pragma omp task
-                achou = achou_s(n,vetor,(int)(TAMANHO/2),TAMANHO);
-            #pragma omp taskwait
+            achou = achou_p(n,vetor);
         }
 
     }
-    
 	fim = omp_get_wtime();
 	double t_paralelo = fim - inicio;
 	printf("Execucao paralela: %f\n",t_paralelo);
