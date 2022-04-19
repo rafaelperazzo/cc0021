@@ -5,7 +5,7 @@
 
 #define MAX 100
 
-int *gerar_vetor(int n);
+float *gerar_vetor(int n);
 
 int main() {
 
@@ -16,8 +16,10 @@ int main() {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Status status;
+    
     time_t t;
-    srand((unsigned) time(&t));
+    srand(time(NULL)*rank);
+    
     /*
     INICIO
     */
@@ -31,12 +33,12 @@ int main() {
     return 0;
 }
 
-int *gerar_vetor(int n) {
-    int *vetor;
+float *gerar_vetor(int n) {
+    float *vetor;
     int i;
-    vetor = malloc(n*sizeof(int));
+    vetor = (float *)malloc(sizeof(float) * n);
     for (i=0;i<n;i++) {
-        int num = (rand() % (MAX+1));
+        float num = (rand() / (float)RAND_MAX);
         vetor[i] = num;
     }
     return vetor;

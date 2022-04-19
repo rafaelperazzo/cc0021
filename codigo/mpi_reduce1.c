@@ -3,10 +3,9 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define MAX 100
 #define ELEMENTOS_POR_PROCESSO 20
 
-int *gerar_vetor(int n);
+float *gerar_vetor(int n);
 
 int main() {
 
@@ -19,35 +18,35 @@ int main() {
     MPI_Status status;
     
     time_t t;
-    srand((unsigned) time(&t));
-    
+    srand(time(NULL)*rank);
+
     //1) Cada processo começa gerando um vetor aleatório e calculando sua soma local
-    int *vetor_local = gerar_vetor(ELEMENTOS_POR_PROCESSO);
-    int soma_local = 0;
+    float *vetor_local = gerar_vetor(ELEMENTOS_POR_PROCESSO);
+    float soma_local = 0;
     for(int i=0;i<ELEMENTOS_POR_PROCESSO;i++) {
         soma_local = soma_local + vetor_local[i];
     }
-    printf("Soma local do processo[%d]: %d\n",rank,soma_local);
+    printf("Soma local do processo[%d]: %f\n",rank,soma_local);
 
     //2) Consolidação dos resultados (reduction)
-    int soma_total;
-    MPI_Reduce(&soma_local,&soma_total,1,MPI_INT,MPI_SUM,0,MPI_COMM_WORLD);
+    float soma_total;
+    MPI_Reduce(&soma_local,&soma_total,1,MPI_FLOAT,MPI_SUM,0,MPI_COMM_WORLD);
 
     //3) Imprimindo o resultado consolidado (quem faz isso é o processo root)
     if(rank==0) {
-        printf("Soma total: %d\n",soma_total);
+        printf("Soma total: %f\n",soma_total);
     }
     free(vetor_local);
     MPI_Finalize();
     return 0;
 }
 
-int *gerar_vetor(int n) {
-    int *vetor;
+float *gerar_vetor(int n) {
+    float *vetor;
     int i;
-    vetor = malloc(n*sizeof(int));
+    vetor = (float *)malloc(sizeof(float) * n);
     for (i=0;i<n;i++) {
-        int num = (rand() % (MAX+1));
+        float num = (rand() / (float)RAND_MAX);
         vetor[i] = num;
     }
     return vetor;
