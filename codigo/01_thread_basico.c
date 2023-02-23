@@ -4,6 +4,6 @@
 int main () {
 	#pragma omp parallel num_threads(4)
 	{
-		printf("Ola mundo!\n");
+		printf("Ola mundo2!\n");
 	}
 }
