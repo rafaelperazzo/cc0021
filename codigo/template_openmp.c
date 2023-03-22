@@ -18,7 +18,7 @@ int main() {
     float *vetor = NULL;
     vetor = gerar_vetor(MAX);
 
-    
+
 
     /*
     FIM
