@@ -25,7 +25,7 @@ int main() {
     inicio = omp_get_wtime();
     for (i=0;i<MAX;i++) {
         if (vetor[i]==n) {
-            printf("Thread[%d] ACHOU: %ld\n", omp_get_thread_num(),vetor[i]);
+            printf("Thread[%d] ACHOU: %.4f\n", omp_get_thread_num(),vetor[i]);
         }
     }
     fim = omp_get_wtime();
@@ -38,7 +38,7 @@ int main() {
 		#pragma omp for
 			for (i=0;i<MAX;i++) {
                 if (vetor[i]==n) {
-                    printf("Thread[%d] ACHOU: %ld\n", omp_get_thread_num(),vetor[i]);
+                    printf("Thread[%d] ACHOU: %.4f\n", omp_get_thread_num(),vetor[i]);
                 }
 			}
 	}
