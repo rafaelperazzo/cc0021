@@ -39,7 +39,7 @@
                 "$gcc"
             ],
             "group": {
-                "kind": "build",
+                "kind": "test",
                 "isDefault": true
             },
             "detail": "compilador: /usr/bin/gcc"
