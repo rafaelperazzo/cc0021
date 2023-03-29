@@ -12,7 +12,7 @@ int main() {
     /*
     INICIO
     */
-    int MAX = 2000000000;
+    int MAX = 100000000;
     time_t t;
     srand(time(NULL));
     double *vetor = NULL;
