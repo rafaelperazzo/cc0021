@@ -19,7 +19,7 @@ int main() {
     srand(time(NULL));
     int *vetor = NULL;
     vetor = gerar_vetor_inteiro(TAMANHO);
-    
+
     /*
     FIM
     */

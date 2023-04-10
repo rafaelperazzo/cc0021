@@ -15,3 +15,7 @@
 * PyLance
 
 * Pylint
+
+## Bootcamp OpenMP
+
+* https://bebop.cs.berkeley.edu/bootcamp2014/
