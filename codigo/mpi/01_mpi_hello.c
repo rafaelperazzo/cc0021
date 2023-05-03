@@ -15,7 +15,6 @@ int main() {
     MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    MPI_Status status;
     
     time_t t;
     srand(time(NULL)*rank);
@@ -24,7 +23,7 @@ int main() {
     INICIO
     */
 
-    
+    printf("Meu rank: %d\n",rank);
 
     /*
     FIM
