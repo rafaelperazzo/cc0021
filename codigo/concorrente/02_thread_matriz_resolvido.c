@@ -10,7 +10,6 @@ int **gerar_matriz(int linhas, int colunas);
 void mostrar_matriz(int **matriz, int linhas, int colunas);
 void *tarefa(void *linha);
 
-
 int **matriz;
 
 int main() {
@@ -22,10 +21,15 @@ int main() {
 
     pthread_t threads[LINHAS];
 
+    int linhas[LINHAS];
+    for (int i=0; i<LINHAS; i++) {
+        linhas[i] = i;
+    }
+
     int i;
 
     for (i=0; i<LINHAS; i++) {
-        rc = pthread_create(&threads[i], NULL, tarefa, &i);
+        rc = pthread_create(&threads[i], NULL, tarefa, &linhas[i]);
     }
 
     for (int i=0; i<LINHAS; i++) {
@@ -61,7 +65,7 @@ void *tarefa(void *linha) {
     int LINHA = *(int*)linha;
     printf("Linha --->: %d\n", LINHA);
     for (int j = 0; j < COLUNAS; j++) {
-        //soma_linha += matriz[LINHA][j];
+        soma_linha += matriz[LINHA][j];
     }
-    //printf("Soma da linha %d: %d\n", LINHA, soma_linha);
+    printf("Soma da linha %d: %d\n", LINHA, soma_linha);
 }
