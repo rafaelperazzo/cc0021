@@ -1,3 +1,10 @@
+/*
+Exercício 1: Escreva um programa que realize o cálculo das somas dos valores das linhas de uma matriz qualquer de números inteiros e 
+imprima os resultados na tela. 
+Faça com que o cálculo do somatório de cada linha seja realizado concorrentemente por uma thread. 
+A soma de cada linha deve ser mostrada por cada thread. 
+
+*/
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
