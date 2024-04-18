@@ -12,6 +12,7 @@ O mutex é usado para garantir o acesso seguro à fila compartilhada entre as th
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include<unistd.h>
 
 #define QUEUE_SIZE 5
 #define NUM_PRODUCERS 3
