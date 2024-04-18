@@ -21,7 +21,7 @@ int main() {
     int tempo1 = 2;
     int tempo2 = 5;
     rc1 = pthread_create(&t1, NULL, tarefa2, &tempo1);
-    rc2 = pthread_create(&t2, NULL, tarefa3, &tempo1);
+    rc2 = pthread_create(&t2, NULL, tarefa3, &tempo2);
 
 
     pthread_mutex_lock(&trava);
