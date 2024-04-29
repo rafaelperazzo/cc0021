@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#define BUFFER_SIZE 10
+#define BUFFER_SIZE 5
 #define NUM_PRODUCERS 8
 #define NUM_CONSUMERS 6
 
@@ -14,6 +14,7 @@ int in = 0, out = 0;
 sem_t mutex, empty, full;
 
 void *producer(void *arg) {
+    int thread_id = *((int *)arg);
     int item;
     while (1) {
         item = rand() % 100; // Produz um item
@@ -49,8 +50,10 @@ int main() {
     sem_init(&empty, 0, BUFFER_SIZE);
     sem_init(&full, 0, 0);
 
+    int id;
     for (int i = 0; i < NUM_PRODUCERS; i++) {
-        pthread_create(&producers[i], NULL, producer, NULL);
+        id = i;
+        pthread_create(&producers[i], NULL, producer, &id);
     }
 
     for (int i = 0; i < NUM_CONSUMERS; i++) {

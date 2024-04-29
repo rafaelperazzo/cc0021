@@ -8,25 +8,31 @@ sem_t semaforo;
 
 void *tarefa(void *arg) {
     int thread_id = *((int *)arg);
-    printf("(%d) Aguardando liberação do semáforo...\n",thread_id);
+    
     sem_wait(&semaforo);
-    int valor;
+
     printf("(%d) Acessando região crítica...\n",thread_id);
     sleep(rand() % 8);
+    
     printf("(%d) Saindo da região crítica...\n",thread_id);
     sem_post(&semaforo);
 }
 
 int main() {
 
-    pthread_t thread1, thread2;
+    pthread_t threads[10];
     sem_init(&semaforo, 0, 1); // Inicializa o semáforo com 1 (disponível)
-    int id1 = 1, id2 = 2;
-    pthread_create(&thread1, NULL, tarefa, &id1);
-    pthread_create(&thread2, NULL, tarefa, &id2);
+    
+    int *threads_ids[10];
+    for (int i=0; i<10; i++) {
+        threads_ids[i] = malloc(sizeof(int));
+        *threads_ids[i] = i;
+        pthread_create(&threads[i], NULL, tarefa, (void *)threads_ids[i]);
+    }
 
-    pthread_join(thread1, NULL);
-    pthread_join(thread2, NULL);
+    for (int i=0; i<10; i++) {
+        pthread_join(threads[i], NULL);
+    }
 
     sem_destroy(&semaforo);
     return 0;
