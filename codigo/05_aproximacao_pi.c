@@ -3,7 +3,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define num_steps 300000000
+#define num_steps 1000000000
+#define NUM_THREADS 4
 
 int main() {
     //static long num_steps = 100000000;
@@ -33,7 +34,7 @@ int main() {
     sum = 0;
     inicio = omp_get_wtime();
     step = 1.0/(double) num_steps;
-    #pragma omp parallel private(x) num_threads(4)
+    #pragma omp parallel private(x) num_threads(NUM_THREADS)
     {
         #pragma omp for reduction (+:sum)
         for (i=0;i< num_steps; i++){
@@ -48,6 +49,6 @@ int main() {
     printf("Pi: %f\n",pi);
     printf("Execucao paralela(s): %f\n",t_paralelo);
     printf("Speedup: %.4f\n", speedup);
-	printf("Eficiencia: %.4f\n",speedup/4.0);
+	printf("Eficiencia: %.4f\n",speedup/(double)NUM_THREADS);
     return 0;
 }
