@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <omp.h>
 
 #define MAX 100
 #define TAMANHO 100000000
@@ -10,6 +11,10 @@ double *gerar_vetor(int n);
 int *gerar_vetor_inteiro(int n);
 void mostrar_vetor_inteiro(int *v,int tamanho);
 void mostrar_vetor(double *v,int tamanho);
+double **gerar_matriz(int linhas, int colunas);
+void mostrar_matriz(double **matriz, int linhas, int colunas);
+int **gerar_matriz_inteiro(int linhas, int colunas);
+void mostrar_matriz_inteiro(int **matriz, int linhas, int colunas);
 
 int main(int argc, char* argv[]) {
     
@@ -30,6 +35,8 @@ int main(int argc, char* argv[]) {
     double tempo_sequencial;
     double tempo_paralelo;
     vetor = gerar_vetor_inteiro(TAMANHO);
+    //double **matriz;
+    //matriz = gerar_matriz(TAMANHO,TAMANHO);
     
     /*
     CÓDIGO SEQUENCIAL
@@ -98,4 +105,44 @@ void mostrar_vetor_inteiro(int *v,int tamanho) {
         printf("[%d]",v[i]);
     }
     printf("\n");
+}
+
+int **gerar_matriz_inteiro(int linhas, int colunas) {
+    int **matriz = (int **) malloc(linhas * sizeof(int *));
+    for (int i = 0; i < linhas; i++) {
+        matriz[i] = (int *) malloc(colunas * sizeof(int));
+        for (int j = 0; j < colunas; j++) {
+            matriz[i][j] = rand() % MAX;
+        }
+    }
+    return matriz;
+}
+
+void mostrar_matriz_inteiro(int **matriz, int linhas, int colunas) {
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            printf("%d ", matriz[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+double **gerar_matriz(int linhas, int colunas) {
+    double **matriz = (double **) malloc(linhas * sizeof(double *));
+    for (int i = 0; i < linhas; i++) {
+        matriz[i] = (double *) malloc(colunas * sizeof(double));
+        for (int j = 0; j < colunas; j++) {
+            matriz[i][j] = (rand() / (double)RAND_MAX);
+        }
+    }
+    return matriz;
+}
+
+void mostrar_matriz(double **matriz, int linhas, int colunas) {
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            printf("%.5f ", matriz[i][j]);
+        }
+        printf("\n");
+    }
 }
