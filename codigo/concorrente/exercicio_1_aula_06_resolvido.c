@@ -4,7 +4,7 @@
 #include <pthread.h>
 
 #define MAX 100
-#define TAMANHO 1000000
+#define TAMANHO 10000000
 
 double *gerar_vetor(int n);
 int *gerar_vetor_inteiro(int n);
@@ -19,7 +19,7 @@ struct dados{
     int  quantidade;
 };
 
-int soma = 0;
+double soma = 0;
 
 pthread_mutex_t trava; //TRAVA PARA REGIÃO CRÍTICA - global
 
@@ -45,8 +45,8 @@ int main() {
     for (int i=0;i<2;i++) {
         pthread_join(threads[i], NULL);
     }
-    float media = soma/TAMANHO;
-    printf("Media: %.2f\n", media);
+    double media = soma/(double)TAMANHO;
+    printf("Media: %.5lf\n", media);
     /*
     FIM
     */
