@@ -1,0 +1,8 @@
+#!/bin/bash
+#SBATCH -J MPI_paridade
+#SBATCH -o MPI_paridade.out
+#SBATCH -e MPI_paridade.err
+#SBATCH -t 0-00:00:20
+#SBATCH --ntasks=8
+#SBATCH --ntasks-per-node=2
+mpirun ./paridade

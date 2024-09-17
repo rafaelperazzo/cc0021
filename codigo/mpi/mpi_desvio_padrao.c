@@ -64,12 +64,13 @@ int main(int argc, char** argv) {
      * 
      */
 
+    
+    int *vetor_local = malloc(TAMANHO/nprocs*sizeof(int));
+    MPI_Scatter(vetor, TAMANHO/nprocs, MPI_INT, vetor_local, TAMANHO/nprocs, MPI_INT, 0, MPI_COMM_WORLD);
+
     if (rank==0) {
         inicio = MPI_Wtime();
     }
-
-    int *vetor_local = malloc(TAMANHO/nprocs*sizeof(int));
-    MPI_Scatter(vetor, TAMANHO/nprocs, MPI_INT, vetor_local, TAMANHO/nprocs, MPI_INT, 0, MPI_COMM_WORLD);
 
     /**
      * Cada processo calcula a soma dos elementos do vetor local.

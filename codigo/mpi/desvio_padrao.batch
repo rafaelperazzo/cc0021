@@ -1,0 +1,8 @@
+#!/bin/bash
+#SBATCH -J MPI_desvio_padrao
+#SBATCH -o MPI_desvio_padrao.out
+#SBATCH -e MPI_desvio_padrao.err
+#SBATCH -t 0-00:00:20
+#SBATCH --ntasks=8
+#SBATCH --ntasks-per-node=2
+mpirun ./desvio_padrao
